@@ -20,7 +20,7 @@ export function ActionButton({
             style={{ width: width || '100%' }}
             className={`
                 flex items-center justify-center gap-2.5
-                rounded cursor-pointer px-2 h-10 text-mintCream
+                rounded cursor-pointer px-2 h-12 text-mintCream
                 focus:outline-none focus:ring-2 focus:ring-amaranthPurple   
                 ${disabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-amaranthPurple'}
             `}

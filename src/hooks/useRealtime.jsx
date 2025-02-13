@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react';
-import { getRealtime } from '@/supabase/realtime';
+import { getRealtime, removeChannel } from '@/supabase/realtime';
 import { useDataList } from '@/hooks/useDataList';
 
 export function useRealtime({ name, table }) {
