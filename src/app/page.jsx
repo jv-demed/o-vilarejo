@@ -1,26 +1,16 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useRealtime } from '@/hooks/useRealtime';
 import { Container } from '@/components/boxes/Container';
 import { TextInput } from '@/components/inputs/TextInput';
 import { ActionButton } from '@/components/buttons/ActionButton';
-import { useDataList } from '@/hooks/useDataList';
-import { getRealtime } from '@/supabase/realtime';
 
 export default function Home(){
     
-    const players = useDataList({
+    const players = useRealtime({
+        name: 'players',
         table: 'o-vilarejo_jogadores'
     });
-
-    useEffect(() => {
-        const channel = getRealtime({ 
-            name: 'players realtime',
-            table: 'o-vilarejo_jogadores',
-            callback: players.refresh
-        });
-        return () => removeChannel(channel);
-    }, []);
-
     console.log(players);
 
     const [name, setName] = useState('');
