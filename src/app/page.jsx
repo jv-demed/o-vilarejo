@@ -1,13 +1,13 @@
 'use client'
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useRealtimeObj } from '@/hooks/useRealtimeObj';
 import { useRealtimeList } from '@/hooks/useRealtimeList';
+import { insertMatch } from '@/scripts/matchesScripts';
+import { insertPlayer } from '@/scripts/playersScripts';
 import { Container } from '@/components/boxes/Container';
 import { TextInput } from '@/components/inputs/TextInput';
 import { ActionButton } from '@/components/buttons/ActionButton';
-import { insertPlayer } from '@/scripts/playersScripts';
-import { useRouter } from 'next/navigation';
-import { useRealtimeObj } from '@/hooks/useRealtimeObj';
-import { insertMatch } from '@/scripts/matchesScripts';
 
 export default function Home(){
 
@@ -17,7 +17,6 @@ export default function Home(){
         table: 'o-vilarejo_partidas',
         filter: q => q.eq('status', 0)
     });
-    console.log(match);
     
     const players = useRealtimeList({
         name: 'players',
@@ -30,6 +29,17 @@ export default function Home(){
     }, [players.list]);
 
     const [user, setUser] = useState({ jogador: '' });
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('jogador');
+        const storedMatchId = localStorage.getItem('partidaId');
+        if(storedUser && storedMatchId){
+            router.push(`/${storedMatchId}`);
+        }
+        if(storedUser){
+            setUser({ jogador: storedUser });
+        }
+    }, []);
 
     return (
         <Container>
@@ -44,6 +54,8 @@ export default function Home(){
                     action={async () => {
                         !match.obj && await insertMatch();
                         await insertPlayer(user);
+                        localStorage.setItem('jogador', user.jogador);
+                        localStorage.setItem('partidaId', match.obj.id);
                         router.push(`/${match.obj.id}`);
                     }}
                 />
