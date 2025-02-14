@@ -1,11 +1,15 @@
 'use client'
 import { useEffect } from 'react';
-import { getRealtime, removeChannel } from '@/supabase/realtime';
 import { useDataList } from '@/hooks/useDataList';
+import { getRealtime, removeChannel } from '@/supabase/realtime';
 
-export function useRealtime({ name, table }) {
+export function useRealtimeList({ name, table, select, filter }){
 
-    const data = useDataList({ table: table });
+    const data = useDataList({ 
+        table: table,
+        select: select,
+        filter: filter
+    });
 
     useEffect(() => {
         const channel = getRealtime({ 

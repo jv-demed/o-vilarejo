@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { Loading } from '../elements/Loading';
+import { Loading } from '@/components/elements/Loading';
 
 export function ActionButton({ 
     type, 

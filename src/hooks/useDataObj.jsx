@@ -4,7 +4,7 @@ import { supabase } from '@/supabase/client';
 
 export function useDataObj({
     table,
-    select,
+    select='*',
     filter
 }){
 
